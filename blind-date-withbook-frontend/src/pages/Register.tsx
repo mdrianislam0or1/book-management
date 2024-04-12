@@ -1,8 +1,8 @@
-import { Button } from 'antd';
-import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
-import { useRegisterMutation } from '../redux/features/auth/authApi';
+import { Button } from "antd";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useRegisterMutation } from "../redux/features/auth/authApi";
 
 type RegisterFormData = {
   username: string;
@@ -23,51 +23,66 @@ const Register = () => {
       password: data.password,
     };
 
-    const toastId = toast.loading('Registering');
+    const toastId = toast.loading("Registering");
 
     try {
-      registerUser(userInfo).unwrap();
-      toast.success('Registered successfully', { id: toastId, duration: 2000 });
+      await registerUser(userInfo).unwrap();
+      toast.success("Registered successfully", { id: toastId, duration: 2000 });
       navigate(`/login`);
     } catch (error) {
-      console.error('Registration failed:', error);
-      toast.error('Registration failed');
+      console.error("Registration failed:", error);
+      toast.error("Registration failed");
     }
   };
 
   return (
-    <div className="mx-auto container my-20">
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto mt-8">
+    <div className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-md bg-white rounded-lg p-8 shadow-lg"
+      >
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Register
+        </h2>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="username"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Username:
           </label>
           <input
             type="text"
             id="username"
-            {...register('username')}
+            {...register("username")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="email"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Email:
           </label>
           <input
             type="email"
             id="email"
-            {...register('email')}
+            {...register("email")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+        <div className="mb-6">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Password:
           </label>
           <input
             type="password"
             id="password"
-            {...register('password')}
+            {...register("password")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -77,8 +92,11 @@ const Register = () => {
         >
           Register
         </Button>
-        <div className="mt-4">
-          Already have an account? <Link to="/login">Login</Link>
+        <div className="mt-4 text-center text-gray-700">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500">
+            Login
+          </Link>
         </div>
       </form>
     </div>

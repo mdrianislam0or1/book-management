@@ -24,21 +24,31 @@ const Login = () => {
       email: data.email,
       password: data.password,
     };
-    console.log(data);
     const toastId = toast.loading("Logging in");
 
-    const res = await login(userInfo).unwrap();
-    const user = verifyToken(res.data.token);
-    console.log("lookign for", user);
+    try {
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res.data.token);
 
-    dispatch(setUser({ user: user, token: res.data.token }));
-    toast.success("Logged in", { id: toastId, duration: 2000 });
-    navigate(`/${(user as { role: string }).role}/dashboard`);
+      dispatch(setUser({ user: user, token: res.data.token }));
+      toast.success("Logged in", { id: toastId, duration: 2000 });
+      navigate(`/${(user as { role: string }).role}/dashboard`);
+    } catch (error) {
+      toast.error("Failed to log in. Please check your credentials.", {
+        id: toastId,
+      });
+    }
   };
 
   return (
-    <div className="mx-auto container my-20">
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto mt-8">
+    <div className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 h-screen flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-md bg-white rounded-lg p-8 shadow-lg"
+      >
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Login
+        </h2>
         <div className="mb-4">
           <label
             htmlFor="email"
@@ -53,7 +63,7 @@ const Login = () => {
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-6">
           <label
             htmlFor="password"
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -61,7 +71,7 @@ const Login = () => {
             Password:
           </label>
           <input
-            type="text"
+            type="password"
             id="password"
             {...register("password")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
@@ -73,8 +83,13 @@ const Login = () => {
         >
           Login
         </Button>
-        if you are not registered yet, please{" "}
-        <Link to="/register">register</Link>
+        <p className="text-center text-sm text-gray-600 mt-4">
+          If you are not registered yet, please{" "}
+          <Link to="/register" className="text-blue-500">
+            register
+          </Link>
+          .
+        </p>
       </form>
     </div>
   );

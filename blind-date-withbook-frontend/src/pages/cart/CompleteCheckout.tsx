@@ -62,36 +62,47 @@ const CompleteCheckout = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Complete Checkout</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center text-blue-600">
+        Complete Checkout
+      </h1>
       <Card title="Cart Summary" className="mb-4">
-        <p>Total Amount: ${cartSummary?.data.totalAmount.toFixed(2)}</p>
+        <p className="text-lg">
+          Total Amount: ${cartSummary?.data.totalAmount.toFixed(2)}
+        </p>
         <Divider />
-        <p>Buyer's Name: {cartSummary?.data.buyerName}</p>
-        <p>Contact Number: {cartSummary?.data.contactNumber}</p>
-        <p>
+        <p className="text-lg">Buyer's Name: {cartSummary?.data.buyerName}</p>
+        <p className="text-lg">
+          Contact Number: {cartSummary?.data.contactNumber}
+        </p>
+        <p className="text-lg">
           Selling Date:{" "}
           {new Date(cartSummary?.data.sellingDate).toLocaleString()}
         </p>
         <Divider />
-        <p>Items:</p>
+        <p className="text-lg">Items:</p>
         <ul>
           {cartSummary?.data.items.map((item: any, index: number) => (
-            <li key={index}>
-              Book ID: {item.book}, Quantity: {item.quantity}
-              <Button
-                onClick={() => handleRemoveFromCart(item.book)}
-                loading={removeLoading}
-                style={{ marginRight: "8px" }}
-              >
-                Remove
-              </Button>
-              <InputNumber
-                min={1}
-                value={item.quantity}
-                onChange={(value) =>
-                  handleUpdateQuantity(item.book, Number(value))
-                }
-              />
+            <li key={index} className="mb-4">
+              <p className="text-lg">
+                Book ID: {item.book}, Quantity: {item.quantity}
+              </p>
+              <div className="flex items-center mt-2">
+                <Button
+                  onClick={() => handleRemoveFromCart(item.book)}
+                  loading={removeLoading}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold mr-4"
+                >
+                  Remove
+                </Button>
+                <InputNumber
+                  min={1}
+                  value={item.quantity}
+                  onChange={(value) =>
+                    handleUpdateQuantity(item.book, Number(value))
+                  }
+                  className="w-32"
+                />
+              </div>
             </li>
           ))}
         </ul>

@@ -55,19 +55,23 @@ const CheckoutPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Checkout</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center text-blue-600">
+        Checkout
+      </h1>
       {cartItems.map((item) => (
-        <Card key={item.bookId} className="mb-4">
-          <p>Book ID: {item.bookId}</p>
+        <Card key={item.bookId} className="mb-4 bg-gray-100 p-4">
+          <p className="text-lg font-semibold mb-2">Book ID: {item.bookId}</p>
           <Input
             type="number"
             value={item.quantity}
             onChange={(e) => handleQuantityChange(item.bookId, +e.target.value)}
             className="mb-2"
+            placeholder="Enter Quantity"
           />
           <Button
             onClick={() => handleRemoveFromCart(item.bookId)}
             loading={isRemovingFromCart}
+            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold"
           >
             Remove
           </Button>
@@ -77,21 +81,26 @@ const CheckoutPage = () => {
         placeholder="Buyer's Name"
         value={buyerName}
         onChange={(e) => setBuyerName(e.target.value)}
-        className="mb-2"
+        className="mb-4"
       />
       <Input
         placeholder="Contact Number"
         value={contactNumber}
         onChange={(e) => setContactNumber(e.target.value)}
-        className="mb-2"
+        className="mb-4"
       />
       <Input
         placeholder="Selling Date"
         value={sellingDate}
         onChange={(e) => setSellingDate(e.target.value)}
-        className="mb-4"
+        className="mb-8"
       />
-      <Button type="primary" onClick={handleCheckout} loading={isAddingToCart}>
+      <Button
+        type="primary"
+        onClick={handleCheckout}
+        loading={isAddingToCart}
+        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold"
+      >
         Checkout
       </Button>
     </div>
